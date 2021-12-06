@@ -1,0 +1,13 @@
+{% extends 'infused/base.html' %}
+
+{% block content %}
+
+<p>Add a new playlist:</p>
+
+<form action="{% url 'infused:new_channel' %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name = "submit">Add playlist</button>
+</form>
+
+{% endblock content %}

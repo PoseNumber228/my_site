@@ -1,0 +1,15 @@
+{% extends "infused/base.html" %}
+
+{% block content %}
+
+    <p><a href="{% url 'infused:channel' channel.id %}">{{ channel }}</a></p>
+
+    <p>Edit entry</p>
+
+    <form action="{% url 'infused:edit_entry' entry.id %}" method='post'>
+        {% csrf_token %}
+        {{form.as_p}}
+        <button name="submit">Save changes</button>
+    </form>
+
+{% endblock content %}

@@ -1,0 +1,38 @@
+{% extends 'infused/base.html' %}
+
+{% block content %}
+    <p>Playlist: {{ channel }}</p>
+
+    <p>Entries:</p>
+    <p>
+        <a href="{% url 'infused:new_entry' channel.id%}">Add new entry</a>
+    </p>
+    <ul>
+        {% for entry in entries %}
+        <li>
+            <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
+            <p>{{ entry.text|linebreaks }}</p>
+            <p>
+                <a href="{% url 'infused:edit_entry' entry.id %}">Edit entry</a>
+            </p>
+        </li>
+        {% empty %}
+        <li>There are no entries for this channel yet.</li>
+        {% endfor %}
+    </ul>
+    <p>Video:</p>
+        {% for x in video %}
+        <video class="video-fluid" controls autoplay>
+            <video class="embed-responsive embed-responsive-16by9"
+                   controls="controls">
+            </video>
+            <source src="{{ x.video.url}}" type="video/mp4">
+        </video>
+        {% empty %}
+        <li>There are no entries for this channel yet.</li>
+        {% endfor %}
+        <p>
+            <a href="{% url 'infused:new_video' channel.id %}">Add new
+                video</a>
+        </p>
+{% endblock content %}

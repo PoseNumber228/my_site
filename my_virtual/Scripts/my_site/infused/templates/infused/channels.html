@@ -1,0 +1,19 @@
+{% extends "infused/base.html" %}
+
+{% block content %}
+
+    <p>Playlists</p>
+
+    <ul>
+        {% for channel in channels %}
+        <li>
+            <a href="{% url 'infused:channel' channel.id %}">{{ channel }}</a>
+        </li>
+        {% empty %}
+        <li> No channels have been added yet.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'infused:new_channel' %}">Add a new playlist:</a>
+
+{% endblock content %}
