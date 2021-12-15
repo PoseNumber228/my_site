@@ -6,10 +6,11 @@
 
     <p>Add a new video</p>
 
-    <form action="{% url 'infused:new_video' channel.id %}" method="post">
+    <form action="{% url 'infused:new_video' channel.id %}" method="post"
+          enctype="multipart/form-data">
         {% csrf_token %}
-        {{form.as_p}}
-        <button name='submit'>Add video</button>
+        {{ form.as_p }}
+        <input type='submit' value="Add video">
     </form>
 
 {% endblock content %}

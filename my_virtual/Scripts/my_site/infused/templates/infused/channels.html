@@ -1,19 +1,28 @@
 {% extends "infused/base.html" %}
 
+{% block page_header %}
+    <h1>Channels</h1>
+    <form class="d-flex" method="POST"
+    action="{% url 'infused:search_channel' %}">
+        {% csrf_token %}
+        <input class="form-control me-2" type="search"
+               placeholder="Search channels"
+               aria-label="Search", name="searched">
+        <button class="btn btn-outline-secondary" type="submit">Search</button>
+    </form>
+{% endblock page_header %}
+
 {% block content %}
-
-    <p>Playlists</p>
-
     <ul>
         {% for channel in channels %}
-        <li>
+        <li><h3>
             <a href="{% url 'infused:channel' channel.id %}">{{ channel }}</a>
-        </li>
+        </h3></li>
         {% empty %}
-        <li> No channels have been added yet.</li>
+        <li><h3> No channels have been added yet.</h3></li>
         {% endfor %}
     </ul>
 
-    <a href="{% url 'infused:new_channel' %}">Add a new playlist:</a>
+    <h3><a href="{% url 'infused:new_channel' %}">Add a new channel</a></h3>
 
 {% endblock content %}

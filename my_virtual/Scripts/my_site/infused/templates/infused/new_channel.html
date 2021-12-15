@@ -7,7 +7,7 @@
 <form action="{% url 'infused:new_channel' %}" method='post'>
     {% csrf_token %}
     {{ form.as_p }}
-    <button name = "submit">Add playlist</button>
+    <button name = "submit">Add channel</button>
 </form>
 
 {% endblock content %}

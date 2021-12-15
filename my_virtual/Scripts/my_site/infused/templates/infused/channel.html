@@ -1,38 +1,75 @@
 {% extends 'infused/base.html' %}
 
-{% block content %}
-    <p>Playlist: {{ channel }}</p>
+{% block page_header %}
+<h3>{{ channel }}</h3>
+{% endblock page_header %}
 
-    <p>Entries:</p>
-    <p>
-        <a href="{% url 'infused:new_entry' channel.id%}">Add new entry</a>
-    </p>
+{% block content %}
     <ul>
         {% for entry in entries %}
-        <li>
-            <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
-            <p>{{ entry.text|linebreaks }}</p>
-            <p>
-                <a href="{% url 'infused:edit_entry' entry.id %}">Edit entry</a>
-            </p>
-        </li>
+        <div class="card-header">
+            <h4 class="card-header">
+                {{ entry.date_added|date:'M d, Y H:i' }}
+                <small><a href="{% url 'infused:edit_entry' entry.id %}">
+                    Edit entry</a></small>
+            </h4>
+            <div class="card-body">
+                {{ entry.text|linebreaks }}
+            </div>
+        </div>
         {% empty %}
-        <li>There are no entries for this channel yet.</li>
-        {% endfor %}
-    </ul>
-    <p>Video:</p>
-        {% for x in video %}
-        <video class="video-fluid" controls autoplay>
-            <video class="embed-responsive embed-responsive-16by9"
-                   controls="controls">
-            </video>
-            <source src="{{ x.video.url}}" type="video/mp4">
-        </video>
-        {% empty %}
-        <li>There are no entries for this channel yet.</li>
+        <p>There are no entries for this channel yet.</p>
         {% endfor %}
         <p>
-            <a href="{% url 'infused:new_video' channel.id %}">Add new
-                video</a>
+            <a href="{% url 'infused:new_entry' channel.id%}">
+                Add a new entry</a>
         </p>
+    </ul>
+    <ul>
+        {% for x in video %}
+        <video class="embed-responsive embed-responsive-16by9" controls>
+            <iframe class="movie" allowfullscreen controls="controls"></iframe>
+                <source src="{{ x.video.url}}" type="video/mp4">
+            </video>
+        <style>
+            .movie {
+                width: 100%;
+                height: auto;
+                margin: 0 auto;
+                display: block;
+                max-width: 500px;
+            }
+        </style>
+        {% empty %}
+        <li>There are no videos for this channel yet.</li>
+        {% endfor %}
+        <p>
+            <a href="{% url 'infused:new_video' channel.id %}">
+                Add a new video</a>
+        </p>
+    </ul>
+    <ul>
+        {% for comment in comments %}
+        <div class="card-header">
+            <h4 class="card-header">
+                {{ comment.date_added|date:'M d, Y H:i' }}
+                {% if user.is_authenticated %}
+                    {{ user }}
+                {% else %}
+                    anonymous
+                {% endif %}
+            </h4>
+            <div class="card-body">
+                {{ comment.text|linebreaks }} <br/>
+            </div>
+        </div>
+        {% empty %}
+        <li>There are no comments for this channel yet.</li>
+        {% endfor %}
+        <p>
+            <a href="{% url 'infused:new_comments' channel.id%}">
+                Add a new comment</a>
+        </p>
+    </ul>
+
 {% endblock content %}

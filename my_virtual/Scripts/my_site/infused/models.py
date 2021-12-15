@@ -36,12 +36,28 @@ class Video(models.Model):
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
     text = models.CharField(max_length=100)
     date_added = models.DateTimeField(auto_now_add=True)
-    video = models.FileField(upload_to='video/', validators=[
-        FileExtensionValidator(allowed_extensions=['mp4'])])
+    video = models.FileField(upload_to='video/',
+                             validators=[FileExtensionValidator(
+                                 allowed_extensions=['mp4'])])
 
     class Meta:
         verbose_name_plural = 'videos'
 
     def __str__(self):
         """Возращает строкове представление модели."""
+        return self.text
+
+
+class Comments(models.Model):
+    """Комментарии, которые оставляют пользователи"""
+    channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
+    text = models.TextField()
+    date_added = models.DateTimeField(auto_now=True)
+    user_name = models.CharField(max_length=25)
+
+    class Meta:
+        verbose_name_plural = 'comments'
+
+    def __str__(self):
+        """Возращает строковое представление модели."""
         return self.text
